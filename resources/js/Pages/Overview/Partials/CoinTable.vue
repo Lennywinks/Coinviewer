@@ -1,7 +1,7 @@
 <script setup>
 
     import SearchBox from "@/Components/SearchBox.vue";
-    import {Link, router} from '@inertiajs/vue3';
+    import {Link} from '@inertiajs/vue3';
 
     defineProps({
         coins: Object,
