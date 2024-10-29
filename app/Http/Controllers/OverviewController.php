@@ -30,7 +30,7 @@ class OverviewController extends Controller
                         ->where('name', 'like', "%{$search}%")
                         ->orWhere('id', 'like', "%{$search}%");
                 })
-                ->select('id', 'name', 'symbol', 'rank', 'total_supply')
+                ->select('id', 'name', 'symbol', 'rank')
                 ->orderBy('rank')
                 ->paginate(10)
                 ->withQueryString(),
