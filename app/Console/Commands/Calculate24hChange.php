@@ -53,45 +53,27 @@ class Calculate24hChange extends Command
             ->orderBy('quote')
             ->get();
 
-        $i = 0;
-        $wrong = 0;
-        foreach ($newPrices as $index => $newPrice)
+        foreach ($newPrices as $newPrice)
         {
-
             $oldPrice = $oldPrices->filter(function ($price) use ($newPrice) {
                 return $price->coin_id == $newPrice->coin_id && $price->quote == $newPrice->quote;
             })->first();
 
             if ($oldPrice == null) continue;
 
-            print('$newPrice->coin_id: ' . $newPrice->coin_id . PHP_EOL);
-            print('$newPrice->quote: ' . $newPrice->quote . PHP_EOL);
-            print('$newPrice->price: ' . $newPrice->price. PHP_EOL);
-
-            print('$oldPrice->coin_id: ' . $oldPrice->coin_id . PHP_EOL);
-            print('$oldPrice->quote: ' . $oldPrice->quote . PHP_EOL);
-            print('$oldPrice->price: ' . $oldPrice->price. PHP_EOL);
-
-
-            if ($newPrice->coin_id != $oldPrice->coin_id || $newPrice->quote != $oldPrice->quote)
-            {
-                $wrong++;
-                continue;
-            }
             if ($newPrice->price > 0 && $oldPrice->price > 0)
             {
-                print($newPrice->price . '/' . $oldPrice->price . PHP_EOL);
-                $change_24h = round(($newPrice->price / $oldPrice->price) / $newPrice->price * 100, 4);
-            } else
-            {
-                $change_24h = 0;
+                $change_24h = round(($newPrice->price - $oldPrice->price) / $newPrice->price * 100, 5);
+                $coinprice = CoinPrice::updateOrCreate(
+                    [
+                        'coin_id' => $newPrice->coin_id,
+                        'date' => $newPrice->date,
+                        'quote' => $newPrice->quote,
+                    ],
+                    [
+                        'price_change_24h' => $change_24h,
+                    ]);
             }
-            print('$change_24h: ' . $change_24h. PHP_EOL);
-            print(PHP_EOL);
-
-            $i++;
         }
-        print($i. PHP_EOL);
-        print($wrong. PHP_EOL);
     }
 }

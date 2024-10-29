@@ -1,21 +1,18 @@
 <script setup>
-
     import {ref} from "vue";
-    import { router } from '@inertiajs/vue3'
 
     const selectedOption = ref('EUR')
     function getClass(option) {
         return this.selectedOption === option
-        ? 'bg-blue-600 text-white border-blue-600'
-        : 'text-gray-700 bg-white border-gray-300'
+        ? 'bg-indigo-600 text-white border-indigo-600'
+        : 'text-gray-300 bg-gray-700 border-gray-600'
     }
 
-    function applyFilter(option) {
-        router.get('/overview',
-            {'quote': option},
-            {preserveState: true}
-        )
-    }
+    const emit = defineEmits(['filter'])
+
+    const filter = (e) => {
+        emit('filter', {'quote': e.target.value})
+    };
 </script>
 
 <template>
@@ -23,7 +20,7 @@
     <div>
         <form class="flex space-x-2">
             <div>
-                <input @click="applyFilter('EUR')" type="radio" id="option1" value="EUR" v-model="selectedOption" class="hidden" />
+                <input @click="filter" type="radio" id="option1" value="EUR" v-model="selectedOption" class="hidden" />
                 <label
                     :class="getClass('EUR')"
                     for="option1"
@@ -33,7 +30,7 @@
             </div>
 
             <div>
-                <input @click="applyFilter('USD')" type="radio" id="option2" value="USD" v-model="selectedOption" class="hidden" />
+                <input @click="filter" type="radio" id="option2" value="USD" v-model="selectedOption" class="hidden" />
                 <label
                     :class="getClass('USD')"
                     for="option2"
@@ -43,7 +40,7 @@
             </div>
 
             <div>
-                <input @click="applyFilter('BTC')" type="radio" id="option3" value="BTC" v-model="selectedOption" class="hidden" />
+                <input @click="filter" type="radio" id="option3" value="BTC" v-model="selectedOption" class="hidden" />
                 <label
                     :class="getClass('BTC')"
                     for="option3"

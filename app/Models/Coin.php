@@ -26,6 +26,6 @@ class Coin extends Model
             ->hasOne(CoinPrice::class)
             ->orderByDesc('date')
             ->latest()
-            ->select(['coin_id', 'date', 'quote', 'price']);
+            ->select(['coin_id', 'date', 'quote', 'price', 'price_change_24h']);
     }
 }

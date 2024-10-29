@@ -15,8 +15,6 @@ class OverviewController extends Controller
         $quote = $request->input('quote') ?? 'EUR';
 
         return Inertia::render('Overview/Overview', [
-            'quote' => $quote,
-
             'coinPrices' => CoinPrice::query()
                 ->select('date', 'price', 'quote')
                 ->where('quote', $quote)
@@ -27,9 +25,20 @@ class OverviewController extends Controller
                 {
                     $query->where('quote', $quote);
                 }])
+                ->when(request()->input('search'), function ($query, $search) {
+                    $query
+                        ->where('name', 'like', "%{$search}%")
+                        ->orWhere('id', 'like', "%{$search}%");
+                })
                 ->select('id', 'name', 'symbol', 'rank', 'total_supply')
                 ->orderBy('rank')
-                ->get()
+                ->paginate(10)
+                ->withQueryString(),
+
+            'filters' => [
+                'quote' => $quote,
+                'search' => request()->input('search'),
+            ]
         ]);
     }
 }
