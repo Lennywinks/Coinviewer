@@ -95,14 +95,14 @@
                                 </td>
                                 <td v-if="quote === 'BTC'" class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap font-semibold">{{ symbols[quote] + " " + coin.current_price.price.toFixed(8) }}</td>
                                 <td v-else class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap font-semibold">{{ symbols[quote] + " " + coin.current_price.price.toFixed(4) }}</td>
-                                <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap font-semibold">{{ symbols[quote] + " " + nFormatter(coin.current_price.price * coin.total_supply) }}</td>
+                                <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap font-semibold">{{ symbols[quote] + " " + nFormatter(coin.current_price.market_cap) }}</td>
                                 <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                     <div class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
                                         <span v-if="coin.current_price.price_change_24h < 0" class="w-1.5 h-1.5 border-l-[5px] border-l-transparent border-t-[5px] border-t-rose-500 border-r-[5px] border-r-transparent"></span>
-                                        <span v-if="coin.current_price.price_change_24h > 0" class="w-0 h-0 border-l-[5px] border-l-transparent border-b-[5px] border-b-emerald-500 border-r-[5px] border-r-transparent"></span>
+                                        <span v-if="coin.current_price.price_change_24h >= 0" class="w-0 h-0 border-l-[5px] border-l-transparent border-b-[5px] border-b-emerald-500 border-r-[5px] border-r-transparent"></span>
 
                                         <h2 v-if="coin.current_price.price_change_24h < 0" class="text-sm font-normal text-rose-500">{{ Math.round(coin.current_price.price_change_24h * 100) / 100  + "%" }}</h2>
-                                        <h2 v-if="coin.current_price.price_change_24h > 0" class="text-sm font-normal text-emerald-500">{{ Math.round(coin.current_price.price_change_24h * 100) / 100  + "%" }}</h2>
+                                        <h2 v-if="coin.current_price.price_change_24h >= 0" class="text-sm font-normal text-emerald-500">{{ Math.round(coin.current_price.price_change_24h * 100) / 100  + "%" }}</h2>
                                     </div>
                                 </td>
                             </tr>
@@ -133,12 +133,12 @@
                     </span>
                 </Component>
 
-                <div v-else-if="!link.label.includes('Next')" class="items-center hidden lg:flex gap-x-4">
+                <div v-else-if="!link.label.includes('Next')" class="items-center hidden lg:flex gap-x-3">
                     <Component
                         :is="link.url ? Link : 'div'"
                         :href="link.url"
                         v-html="link.label"
-                        class="px-2 py-1 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2  dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700"
+                        class="px-4 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2  dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700"
                         :class="[link.active ? 'dark:border-indigo-600 ' : '', link.url ? 'hover:bg-gray-100 dark:hover:bg-gray-800': ' ']"
                         preserve-state
                         preserve-scroll
