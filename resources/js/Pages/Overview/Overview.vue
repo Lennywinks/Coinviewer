@@ -1,7 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import {Head, router} from '@inertiajs/vue3';
-import PriceChart from "@/Components/PriceChart.vue";
 import QuoteRadioButtons from "@/Components/QuoteRadioButtons.vue";
 import CoinTable from "@/Pages/Overview/Partials/CoinTable.vue";
 import {throttle} from "lodash/function.js";
@@ -34,7 +33,6 @@ const handleFilter = throttle((filter) => {
                 <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Overview</h2>
                 <QuoteRadioButtons @filter="handleFilter"/>
             </div>
-
         </template>
 
         <div class="">
