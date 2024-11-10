@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\CoinController;
 use App\Http\Controllers\OverviewController;
+use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -26,15 +28,14 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/overview', [OverviewController::class, 'show'])
-    ->middleware(['auth', 'verified'])
-    ->name('overview');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/overview', [OverviewController::class, 'show'])->name('overview');
 
-Route::get('/test', function () {
-    return Inertia::render('Test', [
-        'testValue' => 3
-    ]);
-})->middleware(['auth', 'verified'])->name('test');
+    Route::get('/coin/{id}', [CoinController::class, 'show'])->name('coin.show');
+
+    Route::get('/portfolio', [PortfolioController::class, 'show'])->name('portfolio.show');
+    Route::post('/portfolio', [PortfolioController::class, 'create'])->name('portfolio.create');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

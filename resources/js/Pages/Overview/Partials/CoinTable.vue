@@ -1,15 +1,16 @@
 <script setup>
-
     import SearchBox from "@/Components/SearchBox.vue";
-    import {Link} from '@inertiajs/vue3';
+    import {Link, usePage} from '@inertiajs/vue3';
+
+    const page = usePage()
 
     defineProps({
         coins: Object,
-        quote: String
     })
 
     const emit = defineEmits(['search'])
     const handleSearch = (e) => {
+        console.log(e)
         emit('search', {'search': e})
     };
 
@@ -40,9 +41,7 @@
 </script>
 
 <template>
-
-
-    <section class="container px-4 mx-auto">
+    <section class="containerv mx-auto">
         <div class="flex flex-col mt-6 w-3/4 mx-auto">
             <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -81,7 +80,7 @@
                             <tbody class="divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                             <tr v-for="coin in coins.data">
                                 <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                    <div class="inline-flex items-center gap-x-3">
+                                    <Link :href="route('coin.show', {id: coin.id, _query: {'quote': page.props.selectedQuote}})" preserve-state class="inline-flex items-center gap-x-3">
                                         <div class="text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{{ coin.rank }}</div>
 
                                         <div class="flex items-center gap-x-2">
@@ -91,11 +90,11 @@
                                                 <p class="text-sm font-normal text-gray-600 dark:text-gray-400">{{ coin.name }}</p>
                                             </div>
                                         </div>
-                                    </div>
+                                    </Link>
                                 </td>
-                                <td v-if="quote === 'BTC'" class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap font-semibold">{{ symbols[quote] + " " + coin.current_price.price.toFixed(8) }}</td>
-                                <td v-else class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap font-semibold">{{ symbols[quote] + " " + coin.current_price.price.toFixed(4) }}</td>
-                                <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap font-semibold">{{ symbols[quote] + " " + nFormatter(coin.current_price.market_cap) }}</td>
+                                <td v-if="page.props.selectedQuote === 'BTC'" class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap font-semibold">{{ symbols[page.props.selectedQuote] + " " + coin.current_price.price.toFixed(8) }}</td>
+                                <td v-else class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap font-semibold">{{ symbols[page.props.selectedQuote] + " " + coin.current_price.price.toFixed(4) }}</td>
+                                <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap font-semibold">{{ symbols[page.props.selectedQuote] + " " + nFormatter(coin.current_price.market_cap) }}</td>
                                 <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                     <div class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
                                         <span v-if="coin.current_price.price_change_24h < 0" class="w-1.5 h-1.5 border-l-[5px] border-l-transparent border-t-[5px] border-t-rose-500 border-r-[5px] border-r-transparent"></span>

@@ -1,7 +1,9 @@
 <script setup>
     import {ref} from "vue";
+    import {usePage} from "@inertiajs/vue3";
 
-    const selectedOption = ref('EUR')
+    const page = usePage();
+    const selectedOption = ref(page.props.selectedQuote)
     function getClass(option) {
         return this.selectedOption === option
         ? 'bg-indigo-600 text-white border-indigo-600'
@@ -12,11 +14,10 @@
 
     const filter = (e) => {
         emit('filter', {'quote': e.target.value})
-    };
+    }
 </script>
 
 <template>
-
     <div>
         <form class="flex space-x-2">
             <div>

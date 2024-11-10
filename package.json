@@ -19,7 +19,6 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
-        "ag-charts-vue3": "^10.2.0",
-        "ag-grid-vue3": "^32.2.2"
+        "chart.js": "^4.4.6"
     }
 }

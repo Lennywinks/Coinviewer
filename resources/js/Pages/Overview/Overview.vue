@@ -5,10 +5,9 @@ import QuoteRadioButtons from "@/Components/QuoteRadioButtons.vue";
 import CoinTable from "@/Pages/Overview/Partials/CoinTable.vue";
 import {throttle} from "lodash/function.js";
 
-const props = defineProps(['coinPrices', 'coins', 'filters'])
+const props = defineProps(['coins', 'filters'])
 
 const handleFilter = throttle((filter) => {
-    console.log(filter)
     router.get(
         '/overview',
         {
@@ -35,8 +34,8 @@ const handleFilter = throttle((filter) => {
             </div>
         </template>
 
-        <div class="">
-            <CoinTable @search="handleFilter" :coins="props.coins" :quote="props.filters.quote"/>
-        </div>
+
+        <CoinTable @search="handleFilter" :coins="props.coins"/>
+
     </AuthenticatedLayout>
 </template>

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Coin;
-use App\Models\CoinPrice;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -12,18 +11,10 @@ class OverviewController extends Controller
 {
     public function show(Request $request): Response
     {
-        $quote = $request->input('quote') ?? 'EUR';
-
         return Inertia::render('Overview/Overview', [
-            'coinPrices' => CoinPrice::query()
-                ->select('date', 'price', 'quote')
-                ->where('quote', $quote)
-                ->where('coin_id', 'btc-bitcoin')
-                ->get(),
-
-            'coins' => Coin::with(['currentPrice' => function ($query) use ($quote)
+            'coins' => Coin::with(['currentPrice' => function ($query)
                 {
-                    $query->where('quote', $quote);
+                    $query->where('quote', $this->selectedQuote);
                 }])
                 ->when(request()->input('search'), function ($query, $search) {
                     $query
@@ -36,7 +27,6 @@ class OverviewController extends Controller
                 ->withQueryString(),
 
             'filters' => [
-                'quote' => $quote,
                 'search' => request()->input('search'),
             ]
         ]);
