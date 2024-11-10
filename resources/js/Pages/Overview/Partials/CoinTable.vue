@@ -93,7 +93,7 @@
                                     </Link>
                                 </td>
                                 <td v-if="page.props.selectedQuote === 'BTC'" class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap font-semibold">{{ symbols[page.props.selectedQuote] + " " + coin.current_price.price.toFixed(8) }}</td>
-                                <td v-else class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap font-semibold">{{ symbols[page.props.selectedQuote] + " " + coin.current_price.price.toFixed(4) }}</td>
+                                <td v-else class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap font-semibold">{{ symbols[page.props.selectedQuote] + " " + coin.current_price.price.toFixed(2) }}</td>
                                 <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap font-semibold">{{ symbols[page.props.selectedQuote] + " " + nFormatter(coin.current_price.market_cap) }}</td>
                                 <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                     <div class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
