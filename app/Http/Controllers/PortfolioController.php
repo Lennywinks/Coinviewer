@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Coin;
-use App\Models\Portfolio;
 use App\Models\Transaction;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
