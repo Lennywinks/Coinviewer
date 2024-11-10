@@ -17,10 +17,10 @@ return new class extends Migration
             $table->string('coin_id');
             $table->date('date');
             $table->string('quote');
-            $table->decimal('price', 48)->nullable();
-            $table->decimal('volume_24h', 48)->nullable();
+            $table->decimal('price', 50, 12)->nullable();
+            $table->decimal('volume_24h', 50, 12)->nullable();
             $table->bigInteger('market_cap')->nullable();
-            $table->decimal('ath_price', 48)->nullable();
+            $table->decimal('ath_price', 50, 12)->nullable();
             $table->timestamp('ath_date')->nullable();
             $table->timestamps();
 

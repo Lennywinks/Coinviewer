@@ -34,7 +34,7 @@ const page = usePage();
                                 <NavLink :href="route('overview', {_query: {'quote': page.props.selectedQuote}})" :active="route().current('overview')">
                                     Overview
                                 </NavLink>
-                                <NavLink :href="route('portfolio.show')" :active="route().current('portfolio.show')">
+                                <NavLink :href="route('portfolio.show',  {_query: {'quote': page.props.selectedQuote}})" :active="route().current('portfolio.show')">
                                     Portfolio
                                 </NavLink>
                             </div>

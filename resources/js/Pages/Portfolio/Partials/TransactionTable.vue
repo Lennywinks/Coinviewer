@@ -1,9 +1,26 @@
 <script setup>
+import {usePage} from "@inertiajs/vue3";
+
+const page = usePage()
+
 const props = defineProps({
     transactions: Array
 })
 
+const getCurrentPrice = (prices) => {
+    const test = prices.filter((price) => price.quote === page.props.selectedQuote)
+    return test.slice(-1)[0].price
+}
 
+const replaceByDefault = (e) => {
+    e.target.src = 'storage/logos/btc-bitcoin.png'
+}
+
+const symbols = {
+    "EUR": "€",
+    "USD": "$",
+    "BTC": "BTC"
+}
 </script>
 
 <template>
@@ -48,8 +65,9 @@ const props = defineProps({
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap font-semibold">{{ 14 }}</td>
-                            <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap font-semibold">{{ transaction.amount }}</td>
+                            <td v-if="page.props.selectedQuote === 'BTC'" class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap font-semibold">{{ Math.round(getCurrentPrice(transaction.coin.prices) * 100000000) / 100000000 + ' ' + symbols[page.props.selectedQuote] }}</td>
+                            <td v-else class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap font-semibold">{{ Math.round(getCurrentPrice(transaction.coin.prices) * 100) / 100 + ' ' + symbols[page.props.selectedQuote] }}</td>
+                            <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap font-semibold">{{ parseFloat(transaction.amount) }}</td>
                         </tr>
                         </tbody>
                     </table>

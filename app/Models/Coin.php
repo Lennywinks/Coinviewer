@@ -17,7 +17,7 @@ class Coin extends Model
 
     public function prices(): HasMany
     {
-        return $this->hasMany(CoinPrice::class);
+        return $this->hasMany(CoinPrice::class)->orderBy('date');
     }
 
     public function currentPrice(): HasOne
